@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+    <div class="container"></div>
+    <script type="text/babel">
+        window.onload = function () {
+            var data = [
+                {
+                    author: "zhangsan",
+                    comment: "hahaha"
+                },
+                {
+                    author: "zhangsan",
+                    comment: "hahaha"
+                },
+                {
+                    author: "zhangsan",
+                    comment: "hahaha"
+                },
+                {
+                    author: "zhangsan",
+                    comment: "hahaha"
+                },
+                {
+                    author: "zhangsan",
+                    comment: "hahaha"
+                }
+            ];
+            var Comment = React.createClass({
+                render: function () {
+                    return (
+                        <li className="comment">
+                            <span className="author">{this.props.comment.author}：</span>
+                            <span className="content">{this.props.comment.comment}</span>
+                        </li>
+                    );
+                }
+            });
+            var CommentList = React.createClass({
+                render: function () {
+                    var createComment = function (comment) {
+                        return <Comment comment={comment} />;
+                    };
+                    return (
+                        <ul className="comment-list">
+                            <li>评论列表</li>
+                            {this.props.data.map(createComment)}
+                        </ul>
+                    );
+                }
+            });
+            var CommentForm = React.createClass({
+                getInitialState: function () {
+                    return {
+                        text: "hehehe"
+                    };
+                },
+                updateText: function (e) {
+                    this.setState({text: e.target.value});
+                },
+                commentText: function (e) {
+                    var self = this;
+                    self.props.updateStateData({
+                        author: "zhangsan",
+                        comment: e.target.value
+                    });
+                },
+                render: function () {
+                    var self = this;
+                    return (
+                        <div className="comment-form">
+                            <textarea onChange={self.updateText}>{self.state.text}</textarea>
+                            <p>{self.state.text}</p>
+                            <input type="button" onClick={self.commentText} name="submit" value="submit" />
+                        </div>
+                    );
+                }
+            });
+            var CommentBox = React.createClass({
+                getInitialState: function () {
+                    return {
+                        data: data
+                    }
+                },
+                updateStateData: function (options) {
+                    var self = this;
+                    self.setState({
+                        data: self.state.data.push(options)
+                    });
+                },
+                render: function () {
+                    return (
+                        <div className="comment-box">
+                            <h3>{this.props.title}</h3>
+                            <CommentList data={this.state.data} />
+                            <CommentForm updateStateData={this.updateStateData}/>
+                        </div>
+                    );
+                }
+            });
+            ReactDOM.render(
+                <CommentBox title="评论框" />,
+                document.querySelector(".container")
+            );
+        };
+    </script>
+    <script src="../../build/react.js"></script>
+    <script src="../../build/react-dom.js"></script>
+    <script src="../../build/browser.min.js"></script>
+</body>
+</html>
