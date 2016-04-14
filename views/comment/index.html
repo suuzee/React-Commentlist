@@ -64,16 +64,18 @@
                 },
                 commentText: function (e) {
                     var self = this;
+                    console.log(self.refs)
                     self.props.updateStateData({
                         author: "zhangsan",
-                        comment: e.target.value
+                        comment: self.refs.commentContent.value
                     });
+                    self.refs.commentContent.value = "";
                 },
                 render: function () {
                     var self = this;
                     return (
                         <div className="comment-form">
-                            <textarea onChange={self.updateText}>{self.state.text}</textarea>
+                            <textarea onChange={self.updateText} ref="commentContent">{self.state.text}</textarea>
                             <p>{self.state.text}</p>
                             <input type="button" onClick={self.commentText} name="submit" value="submit" />
                         </div>
@@ -89,7 +91,7 @@
                 updateStateData: function (options) {
                     var self = this;
                     self.setState({
-                        data: self.state.data.push(options)
+                        data: self.state.data.concat([options])
                     });
                 },
                 render: function () {
