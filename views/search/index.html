@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        span {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container"></div>
+<script type="text/babel">
+    window.onload = function () {
+        var products = [
+            {
+                name: "Basketball1",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball2",
+                price: "11",
+                storeNum: 5
+            },
+            {
+                name: "Basketball3",
+                price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball4",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball1",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball2",
+                price: "11",
+                storeNum: 5
+            },
+            {
+                name: "Basketball3",
+                price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball4",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball1",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball2",
+                price: "11",
+                storeNum: 5
+            },
+            {
+                name: "Basketball3",
+                price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball4",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball1",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball2",
+                price: "11",
+                storeNum: 5
+            },
+            {
+                name: "Basketball3",
+                price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball4",
+                price: "11",
+                storeNum: 10
+            }
+        ];
+        var Search = React.createClass({
+            filterList: function (e) {
+                var self = this;
+                self.props.filterList(e.target.value);
+            },
+            toggleShowAll: function (e) {
+                var self = this;
+            },
+            render: function () {
+                var self = this;
+                return (
+                    <div className="search">
+                        <input type="text" name="" onChange={self.filterList} />
+                        <label htmlFor="check">
+                            <input type="checkbox" name="check" value="" checked={self.props.param.isShowStore} onChange={self.toggleShowAll} />
+                            仅显示仓库中有的商品
+                        </label>
+                    </div>
+                );
+            }
+        });
+        var Product = React.createClass({
+            render: function () {
+                var self = this;
+                return (
+                    <dd className="product">
+                        <span>{self.props.product.name}</span>
+                        <span>${self.props.product.price}</span>
+                        <span>{self.props.product.storeNum}</span>
+                    </dd>
+                );
+            }
+        });
+        var ProductList = React.createClass({
+            product : function (product) {
+                var self = this,
+                    keyWord = self.props.param.keyWord,
+                    isShowStore = self.props.param.isShowStore;
+                // if (isShowStore) {
+                if (product.name.indexOf(keyWord) > -1) {
+                    return (
+                        <Product product={product}/>
+                    );
+                }
+                // }
+            },
+            render: function () {
+                var self = this;
+                return (
+                    <dl className="product-list">
+                        <dt>
+                            <span>Product</span>
+                            <span>Price</span>
+                            <span>Store</span>
+                        </dt>
+                        {self.props.products.map(self.product)}
+                    </dl>
+                );
+            }
+        });
+        var SearchBox = React.createClass({
+            getInitialState: function () {
+                var self = this;
+                return {
+                    keyWord: "",
+                    isShowStore: false
+                };
+            },
+            filterList: function (key) {
+                var self = this;
+                if (!!key) {
+                    self.setState({
+                        keyWord: key
+                    });
+                }
+            },
+            render: function () {
+                var self = this;
+                return (
+                    <div className="search-box">
+                        <h3>搜索</h3>
+                        <Search param={self.state} filterList={self.filterList} />
+                        <h3>列表</h3>
+                        <ProductList products={products} param={self.state}/>
+                    </div>
+                );
+            }
+        });
+        ReactDOM.render(
+            <SearchBox />,
+            document.querySelector(".container")
+        );
+    };
+</script>
+<script src="../../build/react.js"></script>
+<script src="../../build/react-dom.js"></script>
+<script src="../../build/browser.min.js"></script>
+</body>
+</html>
