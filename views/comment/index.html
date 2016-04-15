@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/semantic-ui/dist/semantic.min.css">
 </head>
 <body>
     <div class="container"></div>
@@ -33,10 +34,20 @@
             var Comment = React.createClass({
                 render: function () {
                     return (
-                        <li className="comment">
-                            <span className="author">{this.props.comment.author}：</span>
-                            <span className="content">{this.props.comment.comment}</span>
-                        </li>
+                        <div className="comment">
+                            <div className="content">
+                                <a className="author">{this.props.comment.author}</a>
+                                <div className="metadata">
+                                    <span className="date">Today at 5:42PM</span>
+                                </div>
+                                <div className="text">
+                                    {this.props.comment.comment}
+                                </div>
+                                <div className="actions">
+                                    <a className="reply">Reply</a>
+                                </div>
+                            </div>
+                        </div>
                     );
                 }
             });
@@ -46,10 +57,9 @@
                         return <Comment comment={comment} />;
                     };
                     return (
-                        <ul className="comment-list">
-                            <li>评论列表</li>
+                        <div className="comment-list">
                             {this.props.data.map(createComment)}
-                        </ul>
+                        </div>
                     );
                 }
             });
@@ -74,10 +84,13 @@
                 render: function () {
                     var self = this;
                     return (
-                        <div className="comment-form">
-                            <textarea onChange={self.updateText} ref="commentContent">{self.state.text}</textarea>
-                            <p>{self.state.text}</p>
-                            <input type="button" onClick={self.commentText} name="submit" value="submit" />
+                        <div className="comment-form ui reply form">
+                            <div className="field">
+                                <textarea onChange={self.updateText} ref="commentContent">{self.state.text}</textarea>
+                            </div>
+                            <div className="ui blue labeled submit icon button" onClick={self.commentText}>
+                                <i className="icon edit"></i> Add Reply
+                            </div>
                         </div>
                     );
                 }
@@ -96,8 +109,8 @@
                 },
                 render: function () {
                     return (
-                        <div className="comment-box">
-                            <h3>{this.props.title}</h3>
+                        <div className="comment-box main ui comments">
+                            <h3 className="ui dividing header">{this.props.title}</h3>
                             <CommentList data={this.state.data} />
                             <CommentForm updateStateData={this.updateStateData}/>
                         </div>
@@ -113,5 +126,6 @@
     <script src="../../build/react.js"></script>
     <script src="../../build/react-dom.js"></script>
     <script src="../../build/browser.min.js"></script>
+    <script src="../../node_modules/semantic-ui/dist/semantic.min.css"></script>
 </body>
 </html>

@@ -3,15 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>Document</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        span {
-            margin-right: 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../../node_modules/semantic-ui/dist/semantic.min.css">
 </head>
 <body>
 <div class="container"></div>
@@ -112,11 +104,15 @@
                 var self = this;
                 return (
                     <div className="search">
-                        <input type="text" name="" onChange={self.filterList} />
-                        <label htmlFor="check">
-                            <input type="checkbox" name="check" value="" checked={self.props.param.isShowStore} onChange={self.toggleShowAll} />
-                            仅显示仓库中有的商品
-                        </label>
+                        <div className="field">
+                            <input type="text" name="" onChange={self.filterList} />
+                        </div>
+                        <div className="inline field">
+                            <div className="ui checkbox">
+                                <input type="checkbox" name="checkbox" value="" checked={self.props.param.isShowStore} onChange={self.toggleShowAll} />
+                                <label htmlFor="checkbox">仅显示仓库中有的商品</label>
+                            </div>
+                        </div>
                     </div>
                 );
             }
@@ -125,11 +121,11 @@
             render: function () {
                 var self = this;
                 return (
-                    <dd className="product">
-                        <span>{self.props.product.name}</span>
-                        <span>${self.props.product.price}</span>
-                        <span>{self.props.product.storeNum}</span>
-                    </dd>
+                    <tr className="product">
+                        <td>{self.props.product.name}</td>
+                        <td>${self.props.product.price}</td>
+                        <td>{self.props.product.storeNum}</td>
+                    </tr>
                 );
             }
         });
@@ -159,14 +155,24 @@
             render: function () {
                 var self = this;
                 return (
-                    <dl className="product-list">
-                        <dt>
-                            <span>Product</span>
-                            <span>Price</span>
-                            <span>Store</span>
-                        </dt>
-                        {self.props.products.map(self.product)}
-                    </dl>
+                    <table className="product-list ui very basic table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Products
+                                </th>
+                                <th>
+                                    Price
+                                </th>
+                                <th>
+                                    Store
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {self.props.products.map(self.product)}
+                        </tbody>
+                    </table>
                 );
             }
         });
@@ -180,7 +186,7 @@
             },
             filterList: function (key) {
                 var self = this;
-                if (!!key) {
+                if (!!key || key === "") {
                     self.setState({
                         keyWord: key
                     });
@@ -195,7 +201,7 @@
             render: function () {
                 var self = this;
                 return (
-                    <div className="search-box">
+                    <div className="search-box ui form">
                         <h3>搜索</h3>
                         <Search param={self.state} filterList={self.filterList} toggleShowAll={self.toggleShowAll} />
                         <h3>列表</h3>
@@ -213,5 +219,7 @@
 <script src="../../build/react.js"></script>
 <script src="../../build/react-dom.js"></script>
 <script src="../../build/browser.min.js"></script>
+<script src="../../build/jquery.js"></script>
+<script src="../../node_modules/semantic-ui/dist/semantic.min.css"></script>
 </body>
 </html>
