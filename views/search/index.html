@@ -21,6 +21,46 @@
             {
                 name: "Basketball1",
                 price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball2",
+                price: "11",
+                storeNum: 2
+            },
+            {
+                name: "Basketball3",
+                price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball4",
+                price: "11",
+                storeNum: 3
+            },
+            {
+                name: "Basketball1",
+                price: "11",
+                storeNum: 4
+            },
+            {
+                name: "Basketball2",
+                price: "11",
+                storeNum: 0
+            },
+            {
+                name: "Basketball3",
+                price: "11",
+                storeNum: 5
+            },
+            {
+                name: "Basketball4",
+                price: "11",
+                storeNum: 10
+            },
+            {
+                name: "Basketball1",
+                price: "11",
                 storeNum: 10
             },
             {
@@ -31,7 +71,7 @@
             {
                 name: "Basketball3",
                 price: "11",
-                storeNum: 0
+                storeNum: 6
             },
             {
                 name: "Basketball4",
@@ -56,47 +96,7 @@
             {
                 name: "Basketball4",
                 price: "11",
-                storeNum: 10
-            },
-            {
-                name: "Basketball1",
-                price: "11",
-                storeNum: 10
-            },
-            {
-                name: "Basketball2",
-                price: "11",
-                storeNum: 5
-            },
-            {
-                name: "Basketball3",
-                price: "11",
                 storeNum: 0
-            },
-            {
-                name: "Basketball4",
-                price: "11",
-                storeNum: 10
-            },
-            {
-                name: "Basketball1",
-                price: "11",
-                storeNum: 10
-            },
-            {
-                name: "Basketball2",
-                price: "11",
-                storeNum: 5
-            },
-            {
-                name: "Basketball3",
-                price: "11",
-                storeNum: 0
-            },
-            {
-                name: "Basketball4",
-                price: "11",
-                storeNum: 10
             }
         ];
         var Search = React.createClass({
@@ -106,6 +106,7 @@
             },
             toggleShowAll: function (e) {
                 var self = this;
+                self.props.toggleShowAll();
             },
             render: function () {
                 var self = this;
@@ -137,13 +138,23 @@
                 var self = this,
                     keyWord = self.props.param.keyWord,
                     isShowStore = self.props.param.isShowStore;
-                // if (isShowStore) {
                 if (product.name.indexOf(keyWord) > -1) {
-                    return (
-                        <Product product={product}/>
-                    );
+                    if (isShowStore) {
+                        if (product.storeNum !== 0) {
+                            return (
+                                    < Product
+                            product = {product} / >
+                        )
+                            ;
+                        }
+                    } else {
+                        return (
+                                < Product
+                        product = {product} / >
+                    )
+                        ;
+                    }
                 }
-                // }
             },
             render: function () {
                 var self = this;
@@ -175,12 +186,18 @@
                     });
                 }
             },
+            toggleShowAll: function () {
+                var self = this;
+                self.setState({
+                    isShowStore: !self.state.isShowStore
+                });
+            },
             render: function () {
                 var self = this;
                 return (
                     <div className="search-box">
                         <h3>搜索</h3>
-                        <Search param={self.state} filterList={self.filterList} />
+                        <Search param={self.state} filterList={self.filterList} toggleShowAll={self.toggleShowAll} />
                         <h3>列表</h3>
                         <ProductList products={products} param={self.state}/>
                     </div>
